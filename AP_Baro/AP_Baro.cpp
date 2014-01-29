@@ -100,7 +100,7 @@ void AP_Baro::calibrate()
 float AP_Baro::get_altitude(void)
 {
     float scaling, temp;
-	hal.console->printf_P(PSTR("%f %f %i\n"),_last_altitude,_altitude,(_last_altitude == _altitude));
+	//hal.console->printf_P(PSTR("%f %f %i\n"),_last_altitude,_altitude,(_last_altitude == _altitude));	// Why are these two always the same? BECAUSE ALTITUDE HASNT BEEN CALCULATED YET< FOOL!
     if ((_last_altitude_t == _last_update)) { // || (_last_altitude == _altitude)) {
         // no new information
         return _altitude;
@@ -111,7 +111,14 @@ float AP_Baro::get_altitude(void)
     // unsmoothed values
     scaling                                 = (float)_ground_pressure / (float)get_pressure();
     temp                                    = ((float)_ground_temperature) + 273.15f;
-    _altitude = log(scaling) * temp * 29.271267f;
+    _altitude = log(scaling) * temp * 29.271267f;			// <---------------------------------- NEEDS TO BE COMPARED AFTER THIS!!
+	
+	// NEW
+	//hal.console->printf_P(PSTR("%f %f %i\n"),_last_altitude,_altitude,(_last_altitude == _altitude));	
+	if (_last_altitude == _altitude) {
+        // no new information - DONT update the climb rate filter.
+        return _altitude;
+    }
 
     _last_altitude_t = _last_update;
 	_last_altitude = _altitude;

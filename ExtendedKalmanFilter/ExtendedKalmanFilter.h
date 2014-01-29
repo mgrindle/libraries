@@ -30,8 +30,8 @@ class ExtendedKalmanFilter
   float P[4][4];
   float Q[4][4];
   float R[4][4];
-  ExtendedKalmanFilter (float x[N], float p[N][N], float q[4][4], float r[1][1]);
-  void reset(float x[N], float p[N][N]);
+  //ExtendedKalmanFilter (float x[N], float p[N][N], float q[4][4], float r[1][1]);
+  void reset(float x[N], float p[N][N], float q[4][4], float r[1][1]);
   void update(float z,float Vx, float Vy);
 };
 

@@ -20,19 +20,13 @@ float ExtendedKalmanFilter::measurementpredandjacobian (float* A)
 	return w;
 }
 
-ExtendedKalmanFilter::ExtendedKalmanFilter (float x[N], float p[N][N], float q[4][4], float r[1][1])
-{
-	mmath.MatrixCopy((float*)p,N,N,(float*)P);
-	//MatrixMath.MatrixCopy((float*)p,N,N,(float*)P);
-	mmath.MatrixCopy((float*)x,N,1,(float*)X);
-	mmath.MatrixCopy((float*)q,N,N,(float*)Q);
-	mmath.MatrixCopy((float*)r,1,1,(float*)R);
-}
 
-void ExtendedKalmanFilter::reset(float x[N], float p[N][N])
+void ExtendedKalmanFilter::reset(float x[N], float p[N][N],float q[4][4], float r[1][1])
 {
 	mmath.MatrixCopy((float*)p,N,N,(float*)P);
 	mmath.MatrixCopy((float*)x,N,1,(float*)X);
+    mmath.MatrixCopy((float*)q,N,N,(float*)Q); //
+	mmath.MatrixCopy((float*)r,1,1,(float*)R); //
 }
 void ExtendedKalmanFilter::update(float z,float Vx, float Vy)
 {      
